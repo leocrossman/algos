@@ -16,7 +16,9 @@ const isValidSudoku = (board) => {
       if (num) {
         // get ref to current box
         // --todo: ^
-        // if (i <= 2)
+				if (i <= 2 && j <= 2) {
+					boxes[0].add(num)
+				}
         let boxNum;
         return;
         // for (let boxIdx = 0; boxIdx < Math.sqrt(size); boxIdx++) {
