@@ -4,8 +4,8 @@
  */
 const isValidSudoku = (board) => {
   const size = board.length;
-  const cols = generateColumns(size);
-  const boxes = generateBoxes(size);
+  const cols = generateContainer(size);
+  const boxes = generateContainer(size);
   // const boxes = {}
   for (let i = 0; i < size; i++) {
     const row = new Set();
@@ -16,6 +16,9 @@ const isValidSudoku = (board) => {
       if (num) {
         // get ref to current box
         // --todo: ^
+        // if (i <= 2)
+        let boxNum;
+        return;
         // for (let boxIdx = 0; boxIdx < Math.sqrt(size); boxIdx++) {
         //   if (i === 0 || i === )
         // }
@@ -34,11 +37,7 @@ const isValidSudoku = (board) => {
   // const box = isBoxValid();
 };
 
-const generateBoxes = (size) => {
-  return generateColumns(size);
-};
-
-const generateColumns = (size) => {
+const generateContainer = (size) => {
   return [...Array(size).keys()].reduce((cols, i) => {
     cols[i] = new Set();
     return cols;
