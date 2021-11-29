@@ -13,8 +13,9 @@ const isValidSudoku = board => {
       const num = board[i][j] === '.' ? null : board[i][j];
       // proceed if a num is in this cell
       if (num) {
-        const [currBoxHasNum, box] = boxHasNumAndGetBox(num, i, j);
-        if (currBoxHasNum) return false;
+        // const [currBoxHasNum, box] = boxHasNumAndGetBox(num, i, j);
+        // if (currBoxHasNum) return false;
+        const box = boxes[getBoxNum(i, j)];
         // check if current col or row or box has val
         if (row.has(num) || col.has(num) || box.has(num)) return false;
         col.add(num);
@@ -24,39 +25,8 @@ const isValidSudoku = board => {
     }
   }
   return true;
-  function boxHasNumAndGetBox(num, i, j) {
-    let hasNum = false;
-    let boxNum;
-    if (i <= 2 && j <= 2) {
-      // boxes[0].add(num);
-      boxNum = 0;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 2 && j <= 5) {
-      boxNum = 1;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 2 && j <= 8) {
-      boxNum = 2;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 5 && j <= 2) {
-      boxNum = 3;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 5 && j <= 5) {
-      boxNum = 4;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 5 && j <= 8) {
-      boxNum = 5;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 8 && j <= 2) {
-      boxNum = 6;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 8 && j <= 5) {
-      boxNum = 7;
-      hasNum = boxes[boxNum].has(num);
-    } else if (i <= 8 && j <= 8) {
-      boxNum = 8;
-      hasNum = boxes[boxNum].has(num);
-    }
-    return [hasNum, boxes[boxNum]];
+  function getBoxNum(i, j) {
+    return 3 * Math.floor(i / 3) + Math.floor(j / 3);
   }
 };
 
