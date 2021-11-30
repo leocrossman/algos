@@ -2,25 +2,21 @@
  * @param {character[][]} board
  * @return {boolean}
  */
-const isValidSudoku = board => {
+const isValidSudoku = (board) => {
   const size = board.length;
-  const cols = generateContainer(size);
-  const boxes = generateContainer(size);
+  const set = new Set();
   for (let i = 0; i < size; i++) {
-    const row = new Set();
     for (let j = 0; j < size; j++) {
-      const col = cols[j];
       const num = board[i][j] === '.' ? null : board[i][j];
-      // proceed if a num is in this cell
       if (num) {
-        // const [currBoxHasNum, box] = boxHasNumAndGetBox(num, i, j);
-        // if (currBoxHasNum) return false;
-        const box = boxes[getBoxNum(i, j)];
-        // check if current col or row or box has val
-        if (row.has(num) || col.has(num) || box.has(num)) return false;
-        col.add(num);
-        row.add(num);
-        box.add(num);
+        const boxNum = getBoxNum(i, j);
+        const row = `row:${i}${num}`;
+        const col = `col:${j}${num}`;
+        const box = `box:${boxNum} ${num}`;
+        if (set.has(row) || set.has(col) || set.has(box)) return false;
+        set.add(row);
+        set.add(col);
+        set.add(box);
       }
     }
   }
@@ -28,13 +24,6 @@ const isValidSudoku = board => {
   function getBoxNum(i, j) {
     return 3 * Math.floor(i / 3) + Math.floor(j / 3);
   }
-};
-
-const generateContainer = size => {
-  return [...Array(size).keys()].reduce((cols, i) => {
-    cols[i] = new Set();
-    return cols;
-  }, {});
 };
 
 const boardGood = [
