@@ -10,7 +10,25 @@ Notice that you may not slant the container.
  * @param {number[]} height
  * @return {number}
  */
-const maxArea = function (height) {};
+const maxArea = function (h) {
+  let p1 = 0;
+  let p2 = h.length - 1;
+  let max = -Infinity;
+  while (p1 < p2) {
+    let width = p2 - p1;
+    let shorter = Math.min(h[p1], h[p2]);
+    const currArea = getArea(width, shorter);
+    max = Math.max(max, currArea);
+    if (shorter === h[p1]) {
+      p1++;
+    } else {
+      p2--;
+    }
+  }
+  return max;
+};
+
+const getArea = (a, b) => a * b;
 
 console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])); // 49
 console.log(maxArea([1, 1])); // 1
