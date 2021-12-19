@@ -1,4 +1,5 @@
 /*
+! NOT DONE
 6. Zigzag Conversion
 
 The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
@@ -27,12 +28,25 @@ const convert = function (s, numRows) {
   jumpFront = jump;
   jumpBack = 0;
   let offset = 0;
+  let first = true;
   while (result.length < s.length) {
-    let i = 0;
+    let i;
+    if (first) {
+      i = 0;
+      first = !first;
+    }
+    i = 0;
     let isFrontTurn = true;
     let prevIdx;
     while (i < s.length) {
+      // * figure out what is wrong with logic here. prevIdx === 0 = i when it shouldnt so it skips to i = 2 in second row...
       if ((prevIdx || prevIdx === 0) && prevIdx !== i) {
+        if (result.length === 4) {
+          console.log(jumpFront, jumpBack);
+          console.log(isFrontTurn);
+          console.log(i, offset);
+        }
+
         result += s[i + offset];
       }
       prevIdx = i;
@@ -45,7 +59,6 @@ const convert = function (s, numRows) {
     }
     jumpFront -= 2;
     jumpBack += 2;
-
     offset++;
   }
 
