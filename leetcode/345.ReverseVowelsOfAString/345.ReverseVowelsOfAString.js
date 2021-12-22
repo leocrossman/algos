@@ -2,7 +2,7 @@
  * @param {string} s
  * @returns {string}
  */
-const reverseVowels = function (s) {
+const reverseVowels = function(s) {
   if (s.length < 2) return s;
   const set = new Set('aeiouAEIOU');
   let arr = s.split('');
