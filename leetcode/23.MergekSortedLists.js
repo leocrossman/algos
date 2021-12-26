@@ -13,7 +13,7 @@ function ListNode(val, next) {
 const mergeKLists = (lists) => {
   let head; // head to return at end
   let curr; // current node in our linked list we are building
-  let min; // min node value to use across helpers
+  let min = -Infinity; // min node value to use across helpers
   let next; // next node pointer
 
   /**
@@ -22,31 +22,30 @@ const mergeKLists = (lists) => {
    * @returns {void}
    */
   function addMinNodesToHead(nodes) {
+    // base case: proceed if at least one node is not null
+    if (allNodesNull(nodes)) return;
     // get min value of all current nodes
     min = getMinValOfNodes(nodes);
-    // base case: proceed if at least one node is not null
-    if (!allNodesNull(nodes)) {
-      for (const idx in nodes) {
-        // if any current node is null, skip iteration to nullify the rest.
-        if (nodes[idx] === null) continue;
-        else if (min === nodes[idx].val) {
-          // assign next to the current node and point from there so we don't have to create a new node.
-          next = nodes[idx];
-          // if we have not initialized our head, do it here
-          if (head === undefined) curr = head = next;
-          // MUST check to make this condition so we dont create a cycle for Linked Lists of length 1 with only one Linked List
-          else if (curr !== next) {
-            // point our linked list to the next/new val/node
-            curr.next = next;
-            // move curr to the last node
-            curr = curr.next;
-          }
-          // iterate to the next node of the current linked list
-          nodes[idx] = nodes[idx].next;
+    for (const idx in nodes) {
+      // if any current node is null, skip iteration to nullify the rest.
+      if (nodes[idx] === null) continue;
+      else if (min === nodes[idx].val) {
+        // assign next to the current node and point from there so we don't have to create a new node.
+        next = nodes[idx];
+        // if we have not initialized our head, do it here
+        if (head === undefined) curr = head = next;
+        // MUST check to make this condition so we dont create a cycle for Linked Lists of length 1 with only one Linked List
+        else if (curr !== next) {
+          // point our linked list to the next/new val/node
+          curr.next = next;
+          // move curr to the last node
+          curr = curr.next;
         }
+        // iterate to the next node of the current linked list
+        nodes[idx] = nodes[idx].next;
       }
-      addMinNodesToHead(nodes); // recursive call to add the next nodes/values
     }
+    addMinNodesToHead(nodes); // recursive call to add the next nodes/values
   }
 
   addMinNodesToHead(lists); // do everything!
@@ -60,11 +59,10 @@ const mergeKLists = (lists) => {
  * @returns {Boolean}
  */
 function allNodesNull(nodes) {
-  return (
-    nodes.reduce((prev, curr) => {
-      return curr ? prev : prev + 1;
-    }, 0) === nodes.length
-  );
+  for (const node of nodes) {
+    if (node) return false;
+  }
+  return true;
 }
 
 /**
