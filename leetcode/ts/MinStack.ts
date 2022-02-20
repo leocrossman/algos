@@ -1,8 +1,8 @@
 interface Stack {
-  [key: string]: Node;
+  [key: string]: MinStackNode;
 }
 
-class Node {
+class MinStackNode {
   min: number;
   val: number;
   constructor(val: number, min: number | undefined) {
@@ -12,23 +12,24 @@ class Node {
 }
 
 class MinStack {
-  min: number;
   stack: Stack;
   length: number;
+  stackMin: number;
   constructor() {
     this.stack = {};
     this.length = 0;
-    this.min = Infinity;
+    this.stackMin = Infinity;
   }
 
   push(val: number): void {
-    this.stack[this.length++] = new Node(val, Math.min(this.getMin(), val));
+    this.stackMin = Math.min(this.stackMin, val);
+    this.stack[this.length++] = new MinStackNode(val, this.stackMin);
   }
 
   pop(): void {
     this.stack[--this.length];
     delete this.stack[this.length];
-    this.min = this.stack[this.length - 1].min;
+    this.stackMin = this.stack[this.length - 1]?.min ?? Infinity;
   }
 
   top(): number {
@@ -36,11 +37,20 @@ class MinStack {
   }
 
   getMin(): number {
-    console.log(this.stack);
-    return this.stack[this.length - 1].min;
+    return this.stackMin;
   }
 }
-
+console.clear();
+const ms = new MinStack();
+ms.push(-2);
+ms.push(0);
+ms.push(-3);
+console.log(ms.getMin());
+ms.pop();
+console.log(ms.top());
+console.log(ms.getMin());
+// ["MinStack","push","push","push","getMin","pop","top","getMin"]
+// [[],[-2],[0],[-3],[],[],[],[]]
 /**
  * Your MinStack object will be instantiated and called as such:
  * var obj = new MinStack()

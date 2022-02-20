@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.4.5"
+  },
+  "dependencies": {
+    "ts-node": "^10.5.0"
   }
 }
