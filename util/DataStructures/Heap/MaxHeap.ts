@@ -5,3 +5,6 @@ export default class MaxHeap extends Heap {
     return this.compare.greaterThanOrEqual(firstElement, secondElement);
   }
 }
+
+const heap = new MaxHeap();
+heap.add(2);
