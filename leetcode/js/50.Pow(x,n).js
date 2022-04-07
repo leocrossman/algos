@@ -9,10 +9,10 @@
 //   return x * myPow(x, n - 1);
 // };
 
-function powRecurse(base, power, res = 1) {
+function myPow(base, power, res = 1) {
   if (power === 0) return 1;
   if (power === 1) return base * res;
-  return powRecurse(base, --power, base * res);
+  return myPow(base, --power, base * res);
 }
 
 const memo = (f) => {
@@ -20,5 +20,5 @@ const memo = (f) => {
   // if cache.hasOwn
 };
 
-console.log(powRecurse(0.00001, 2147483647));
-// console.log(myPow(2, 4));
+//console.log(myPow(0.00001, 2147483647));
+console.log(myPow(2, 4));
