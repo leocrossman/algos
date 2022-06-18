@@ -12,6 +12,7 @@
     "jest": "^27.4.5"
   },
   "dependencies": {
+    "leetcode-cli": "^2.6.2",
     "ts-node": "^10.5.0"
   }
 }
